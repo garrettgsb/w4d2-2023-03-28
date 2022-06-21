@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vampires</title>
+  <style>
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin: 1rem;
+      padding: 1rem;
+      background: #E85;
+      border: 1px dashed #222;
+      border-radius: 4px;
+      box-shadow: 2px 2px 8px #222;
+    }
+
+    div > div {
+      filter: hue-rotate(90deg);
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <script>
+    const vampireTree = {
+      name: 'Root',
+      children: [
+        {
+          name: 'Ansel',
+          children: [
+            { name: 'Bethel', },
+            { name: 'Bentley',
+              children: [
+                { name: 'Catherine', },
+                {
+                  name: 'Copernicus',
+                  children: [
+                    { name: 'Diedrick', },
+                    { name: 'Dresden',
+                      children: [
+                        {
+                          name: 'Elgort',
+                          children: [
+                            { name: 'Fiona', },
+                          ],
+                        },
+                        { name: 'Ephram', },
+                      ],
+                    },
+                  ]
+                },
+                { name: 'Caleb', },
+              ],
+            },
+          ]
+        },
+        { name: 'Amhurst', },
+        {
+          name: 'Aurelian',
+          children: [
+            {
+              name: 'Brumhilda',
+              children: [
+                {
+                  name: 'Calista',
+                  children: [
+                    { name: 'Delilah', },
+                    { name: 'Darius', },
+                    { name: 'Dina', },
+                  ]
+                },
+                {
+                  name: 'Caruthers',
+                  children: [
+                    { name: 'Demetrius', },
+                    { name: 'Demarion', },
+                  ],
+                },
+              ],
+            }
+          ],
+        },
+        {
+          name: 'Alphonso',
+          children: [
+            { name: 'Bartholomew', },
+          ],
+        },
+      ]
+    };
+
+    function distanceFromRoot(node, distance=0) {
+      if (node[0].tagName !== 'DIV') return Infinity;
+      const name = node.children('.vampire-name').text();
+      if (name === 'Root') return distance;
+      return distanceFromRoot(node.parent(), distance+1);
+    }
+
+    function createVampire(name) {
+      const element = $('<div>')
+        .html(`🧛‍♀️ <span class='vampire-name'>${name}</span>`)
+        .on('click', (event) => {
+          event.stopPropagation(); // Something weird happens if you don't stopPropagation 🤔
+          alert(`${name} is ${distanceFromRoot(element)} from the Root`);
+        });
+      return element[0];
+    }
+
+    function buildVampireTree(node) {
+      const element = createVampire(node.name);
+      node.children?.forEach(child => {
+        element.appendChild(buildVampireTree(child));
+      });
+      return element;
+    }
+
+    const vampireNodeTree = buildVampireTree(vampireTree);
+    $('body').append(vampireNodeTree);
+  </script>
+</body>
+</html>

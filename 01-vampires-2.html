@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vampires</title>
+  <style>
+    body > div {
+      display: flex;
+    }
+
+    div:hover {
+      border: 1px dashed #38E;
+      box-shadow: 2px 2px 8px #DB5;
+    }
+
+    div:hover > div {
+      display: flex;
+    }
+
+    div {
+      display: none;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin: 1rem;
+      padding: 1rem;
+      background: #E85;
+      border: 1px dashed #222;
+      border-radius: 4px;
+      box-shadow: 2px 2px 8px #222;
+      transition: 0.5s;
+    }
+
+    div > div {
+      filter: hue-rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <div>
+    🧛‍♀️ <span class="vampire-name">Root</span>
+    <div>
+      🧛‍♀️ <span class="vampire-name">Ansel</span>
+      <div>🧛‍♀️ <span class="vampire-name">Bethel</span></div>
+      <div>
+        🧛‍♀️ <span class="vampire-name">Bentley</span>
+        <div>🧛‍♀️ <span class="vampire-name">Catherine</span></div>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Copernicus</span>
+          <div>🧛‍♀️ <span class="vampire-name">Diedrick</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Dresden</span>
+            <div>🧛‍♀️ <span class="vampire-name">Elgort</span>
+              <div>🧛‍♀️ <span class="vampire-name">Fiona</span></div>
+            </div>
+            <div>🧛‍♀️ <span class="vampire-name">Ephram</span></div>
+          </div>
+        </div>
+        <div>🧛‍♀️ <span class="vampire-name">Caleb</span></div>
+      </div>
+    </div>
+    <div>🧛‍♀️ <span class="vampire-name">Amhurst</span></div>
+    <div>
+      🧛‍♀️ <span class="vampire-name">Aurelian</span>
+      <div>
+        🧛‍♀️ <span class="vampire-name">Brumhilda</span>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Calista</span>
+          <div>🧛‍♀️ <span class="vampire-name">Delilah</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Darius</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Dina</span></div>
+        </div>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Caruthers</span>
+          <div>🧛‍♀️ <span class="vampire-name">Demetrius</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Demarion</span></div>
+        </div>
+      </div>
+    </div>
+    <div>🧛‍♀️ <span class="vampire-name">Alphonso</span>
+      <div>🧛‍♀️ <span class="vampire-name">Bartholomew</span></div>
+    </div>
+  </div>
+</body>
+</html>

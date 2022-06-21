@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vampires</title>
+  <style>
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin: 1rem;
+      padding: 1rem;
+      background: #E85;
+      border: 1px dashed #222;
+      border-radius: 4px;
+      box-shadow: 2px 2px 8px #222;
+    }
+
+    div > div {
+      filter: hue-rotate(90deg);
+    }
+
+    aside {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      height: 40vh;
+      padding: 1rem;
+      background: #F0F0F0;
+      box-shadow: 2px 2px 8px #222;
+      border-radius: 4px;
+    }
+
+    aside > * { margin: 1rem; }
+  </style>
+</head>
+<body>
+  <script>
+    function findVampire(name) {
+      const vampires = Array.from(document.querySelectorAll('.vampire-name'));
+      const vampireName = vampires.find(vampire => vampire.innerText.toLowerCase() === name.toLowerCase());
+      return vampireName?.parentElement;
+    }
+
+    function createVampire(name) {
+      const element = document.createElement('div')
+      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
+      element.innerHTML = content;
+      element.addEventListener('click', (event) => {
+          event.stopPropagation();
+          openModalFor(element);
+        });
+      return element;
+    }
+
+    function openModalFor(vampire) {
+      const modal = document.createElement('aside')
+      modal.innerHTML = `
+      <h1>🧛‍♀️</h1>
+      <h2>New Vampire</h2>
+      <input id='new-vampire-name' />
+      <button id='new-vampire-create'>Create</button>
+      <button id='new-vampire-cancel'>Cancel</button>
+      `
+      modal.querySelector('#new-vampire-create').addEventListener('click', () => {
+        vampire.appendChild(createVampire(document.querySelector('#new-vampire-name').value));
+        modal.remove();
+      });
+
+      modal.querySelector('#new-vampire-cancel').addEventListener('click', () => {
+        modal.remove();
+      });
+      document.querySelector('body').appendChild(modal);
+      document.querySelector('#new-vampire-name').focus();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('div').forEach(vampire => {
+        vampire.addEventListener('click', (event) => {
+          event.stopPropagation();
+          openModalFor(vampire);
+        });
+      });
+    });
+  </script>
+  <div>
+    🧛‍♀️ <span class="vampire-name">Root</span>
+    <div>
+      🧛‍♀️ <span class="vampire-name">Ansel</span>
+      <div>🧛‍♀️ <span class="vampire-name">Bethel</span></div>
+      <div>
+        🧛‍♀️ <span class="vampire-name">Bentley</span>
+        <div>🧛‍♀️ <span class="vampire-name">Catherine</span></div>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Copernicus</span>
+          <div>🧛‍♀️ <span class="vampire-name">Diedrick</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Dresden</span>
+            <div>🧛‍♀️ <span class="vampire-name">Elgort</span>
+              <div>🧛‍♀️ <span class="vampire-name">Fiona</span></div>
+            </div>
+            <div>🧛‍♀️ <span class="vampire-name">Ephram</span></div>
+          </div>
+        </div>
+        <div>🧛‍♀️ <span class="vampire-name">Caleb</span></div>
+      </div>
+    </div>
+    <div>🧛‍♀️ <span class="vampire-name">Amhurst</span></div>
+    <div>
+      🧛‍♀️ <span class="vampire-name">Aurelian</span>
+      <div>
+        🧛‍♀️ <span class="vampire-name">Brumhilda</span>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Calista</span>
+          <div>🧛‍♀️ <span class="vampire-name">Delilah</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Darius</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Dina</span></div>
+        </div>
+        <div>
+          🧛‍♀️ <span class="vampire-name">Caruthers</span>
+          <div>🧛‍♀️ <span class="vampire-name">Demetrius</span></div>
+          <div>🧛‍♀️ <span class="vampire-name">Demarion</span></div>
+        </div>
+      </div>
+    </div>
+    <div>🧛‍♀️ <span class="vampire-name">Alphonso</span>
+      <div>🧛‍♀️ <span class="vampire-name">Bartholomew</span></div>
+    </div>
+  </div>
+</body>
+</html>

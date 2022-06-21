@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vampires</title>
+  <style>
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin: 1rem;
+      padding: 1rem;
+      background: #E85;
+      border: 1px dashed #222;
+      border-radius: 4px;
+      box-shadow: 2px 2px 8px #222;
+    }
+
+    div > div {
+      filter: hue-rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const vampireTree = {
+      name: 'Root',
+      children: [
+        {
+          name: 'Ansel',
+          children: [
+            { name: 'Bethel', },
+            { name: 'Bentley',
+              children: [
+                { name: 'Catherine', },
+                {
+                  name: 'Copernicus',
+                  children: [
+                    { name: 'Diedrick', },
+                    { name: 'Dresden',
+                      children: [
+                        {
+                          name: 'Elgort',
+                          children: [
+                            { name: 'Fiona', },
+                          ],
+                        },
+                        { name: 'Ephram', },
+                      ],
+                    },
+                  ]
+                },
+                { name: 'Caleb', },
+              ],
+            },
+          ]
+        },
+        { name: 'Amhurst', },
+        {
+          name: 'Aurelian',
+          children: [
+            {
+              name: 'Brumhilda',
+              children: [
+                {
+                  name: 'Calista',
+                  children: [
+                    { name: 'Delilah', },
+                    { name: 'Darius', },
+                    { name: 'Dina', },
+                  ]
+                },
+                {
+                  name: 'Caruthers',
+                  children: [
+                    { name: 'Demetrius', },
+                    { name: 'Demarion', },
+                  ],
+                },
+              ],
+            }
+          ],
+        },
+        {
+          name: 'Alphonso',
+          children: [
+            { name: 'Bartholomew', },
+          ],
+        },
+      ]
+    };
+
+    function createVampire(name) {
+      const element = document.createElement('div')
+      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
+      element.innerHTML = content;
+      return element;
+    }
+
+    function buildVampireTree(node) {
+      const element = createVampire(node.name);
+      node.children?.forEach(child => {
+        setTimeout(() => element.appendChild(buildVampireTree(child)), 2000);
+      });
+      return element;
+    }
+
+    const vampireNodeTree = buildVampireTree(vampireTree);
+    document.querySelector('body').appendChild(vampireNodeTree);
+  </script>
+</body>
+</html>

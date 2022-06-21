@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <title>Document</title>
+  <style>
+    section {
+      display: flex;
+      width: 80vw;
+      height: 4vh;
+    }
+    div {
+      width: 5%;
+      background: green;
+      transition: 300ms;
+    }
+
+    .touched {
+      filter: brightness(1.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>Score: <span id="score">0</span>
+  <script>
+    let score = 0;
+   for (let i = 0; i < 20; i++) {
+    const row = $('<section>');
+    for (let j = 0; j < 20; j++) {
+      const cell = $('<div>').hover(function() {
+        if ($(this).hasClass('touched')) return;
+        $(this).text('').addClass('touched');
+        $('#score').text(++score);
+      });
+      if (Math.random() > 0.9) {
+        cell.text('🌱');
+      }
+      row.append(cell);
+    }
+    $('body').append(row);
+   }
+  </script>
+</body>
+</html>
