@@ -27,21 +27,21 @@
   <h1>Score: <span id="score">0</span>
   <script>
     let score = 0;
-   for (let i = 0; i < 20; i++) {
-    const row = $('<section>');
-    for (let j = 0; j < 20; j++) {
-      const cell = $('<div>').hover(function() {
-        if ($(this).hasClass('touched')) return;
-        $(this).text('').addClass('touched');
-        $('#score').text(++score);
-      });
-      if (Math.random() > 0.9) {
-        cell.text('🌱');
+    for (let i = 0; i < 20; i++) {
+      const row = $('<section>');
+      for (let j = 0; j < 20; j++) {
+        const cell = $('<div>').hover(function() {
+          if ($(this).hasClass('touched')) return;
+          $(this).text('').addClass('touched');
+          $('#score').text(++score);
+        });
+        if (Math.random() > 0.9) {
+          cell.text('🌱');
+        }
+        row.append(cell);
       }
-      row.append(cell);
+      $('body').append(row);
     }
-    $('body').append(row);
-   }
   </script>
 </body>
 </html>

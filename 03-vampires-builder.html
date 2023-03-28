@@ -92,23 +92,17 @@
       ]
     };
 
-    function createVampire(name) {
-      const element = document.createElement('div')
-      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
-      element.innerHTML = content;
-      return element;
-    }
-
     function buildVampireTree(node) {
-      const element = createVampire(node.name);
+      const vampireNode = document.createElement('div');
+      vampireNode.innerHTML = `🧛‍♀️ <span class='vampire-name'>${node.name}`;
       node.children?.forEach(child => {
-        setTimeout(() => element.appendChild(buildVampireTree(child)), 2000);
+        const childNode = buildVampireTree(child);
+        vampireNode.append(childNode);
       });
-      return element;
+      return vampireNode;
     }
 
-    const vampireNodeTree = buildVampireTree(vampireTree);
-    document.querySelector('body').appendChild(vampireNodeTree);
+    document.body.append(buildVampireTree(vampireTree));
   </script>
 </body>
 </html>

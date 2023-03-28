@@ -41,47 +41,76 @@
 
     aside > * { margin: 1rem; }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
   <script>
     function createVampire(name) {
-      const element = document.createElement('div')
-      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
-      element.innerHTML = content;
-      element.addEventListener('click', (event) => {
-          event.stopPropagation();
-          openModalFor(element);
-        });
-      return element;
+      return $(`
+      <div>
+        🧛‍♀️ <span class='vampire-name'>${name}
+      </div>
+      `).on('click', function(event) {
+        event.stopPropagation();
+        openModalFor($(this));
+      });
     }
 
     function openModalFor(vampire) {
-      const modal = document.createElement('aside')
-      modal.innerHTML = `
-      <h1>🧛‍♀️</h1>
-      <h2>New Vampire</h2>
-      <input id='new-vampire-name' />
-      <button id='new-vampire-create'>Create</button>
-      <button id='new-vampire-cancel'>Cancel</button>
-      `
-      modal.querySelector('#new-vampire-create').addEventListener('click', () => {
-        vampire.appendChild(createVampire(document.querySelector('#new-vampire-name').value));
-        modal.remove();
-      });
+      const modal = $(`
+        <aside>
+          <h1>🧛‍♂️</h1>
+          <h2>Create Vampire</h2>
+          <input id='vampire-name'>
+          <button id='create-button'>Create</button>
+          <button id='close-button'>Close</button>
+        </aside>
+      `);
 
-      modal.querySelector('#new-vampire-cancel').addEventListener('click', () => {
-        modal.remove();
+      const input = modal.find('#vampire-name');
+      const createButton = modal.find('#create-button').on('click', () => {
+        const name = input.val();
+        /*
+          Post lecture example:
+            Question: Okay, but when you refresh the page, all these changes go away... So what's the point?
+
+            Answer: This comes together when you combine these DOM manipulations with web requests
+            (or other "invisible"-to-the-user interactions). So you might think of it as:
+              - The act of creating a vampire is _really_ more about telling a webserver to create a vampire
+              - The DOM manipulation (adding a new div with vampire stuff in it) is just a reflection of that state change in the server
+
+            So the interaction might look like this:
+              - The client (browser app) does a POST to /vampires or something
+              - The server (Express app) adds a new vampire to the database
+              - The server responds to the client with a message like "Cool, I added <<name>> as a child of <<parentName>>"
+              - The client updates the DOM to reflect the success of the change
+              - (On the other hand, if there was an error instead, it could update the DOM to reflect that)
+
+            Here's some pseudo-code (which won't work for a few reasons,
+            but illustrates the point) that represents such an interaction:
+        */
+        $.post('/vampires', { // I'm not sure if this is how $.post works exactly, but it means "Hey jQuery, make a POST request"
+            parent: vampire,
+            name,
+        }).then(response => {
+          if (response.message === 'Cool, that was successful') { // This is a silly message, but you know
+            vampire.append(createVampire(name));
+            modal.remove();
+          } else {
+            // createErrorMessage doesn't exist, but it could be a function that returns a <p> styled to look error-y
+            modal.append(createErrorMessage(response.message));
+          }
+        })
       });
-      document.querySelector('body').appendChild(modal);
-      document.querySelector('#new-vampire-name').focus();
+      const closeButton = modal.find('#close-button').on('click', () => modal.remove());
+
+      $('body').append(modal);
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('div').forEach(vampire => {
-        vampire.addEventListener('click', (event) => {
-          event.stopPropagation();
-          openModalFor(vampire);
-        });
+    $(() => {
+      $('div').on('click', function(event) {
+        event.stopPropagation();
+        openModalFor($(this));
       });
     });
   </script>
